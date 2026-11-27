@@ -44,7 +44,7 @@ The 12 tickets that make up the MVP, in dependency order:
 
 ## How the design was created
 
-The product was designed through a structured interview process ([grilling](https://github.com/mattpocock/skills)) that asked questions in rounds — each round settling decisions that unblocked the next set of questions. Every key decision is recorded in `docs/adr/` and domain vocabulary is captured in `GLOSSARY.md`.
+The product was designed through a structured interview process that asked questions in rounds — each round settling decisions that unblocked the next set of questions. Every key decision is recorded in `docs/adr/` and domain vocabulary is captured in `GLOSSARY.md`.
 
 - [`GLOSSARY.md`](./GLOSSARY.md) — canonical terms for the project
 - [`docs/adr/`](./docs/adr/) — key decisions and why they were made
