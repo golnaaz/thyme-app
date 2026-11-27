@@ -1,0 +1,40 @@
+CREATE TABLE FridgeItem (
+    id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    name TEXT NOT NULL,
+    quantityValue REAL NOT NULL DEFAULT 1.0,
+    quantityUnit TEXT NOT NULL DEFAULT 'Stück',
+    expiryDate TEXT,
+    calories REAL,
+    protein REAL,
+    carbs REAL,
+    fat REAL,
+    barcode TEXT
+);
+
+selectAll:
+SELECT * FROM FridgeItem
+ORDER BY
+    CASE WHEN expiryDate IS NULL THEN 1 ELSE 0 END,
+    expiryDate ASC;
+
+selectById:
+SELECT * FROM FridgeItem WHERE id = :id;
+
+insert:
+INSERT INTO FridgeItem(name, quantityValue, quantityUnit, expiryDate, calories, protein, carbs, fat, barcode)
+VALUES (:name, :quantityValue, :quantityUnit, :expiryDate, :calories, :protein, :carbs, :fat, :barcode);
+
+update:
+UPDATE FridgeItem
+SET name = :name,
+    quantityValue = :quantityValue,
+    quantityUnit = :quantityUnit,
+    expiryDate = :expiryDate,
+    calories = :calories,
+    protein = :protein,
+    carbs = :carbs,
+    fat = :fat
+WHERE id = :id;
+
+delete:
+DELETE FROM FridgeItem WHERE id = :id;

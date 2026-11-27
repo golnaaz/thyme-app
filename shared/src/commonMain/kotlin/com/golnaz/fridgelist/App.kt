@@ -1,48 +1,57 @@
 package com.golnaz.fridgelist
 
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.safeContentPadding
-import androidx.compose.material3.Button
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Done
+import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material.icons.filled.Star
+import androidx.compose.material3.*
 import androidx.compose.runtime.*
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
-import org.jetbrains.compose.resources.painterResource
-
-import fridgelist.shared.generated.resources.Res
-import fridgelist.shared.generated.resources.compose_multiplatform
+import com.golnaz.fridgelist.ui.FridgeScreen
+import com.golnaz.fridgelist.ui.RecipesScreen
+import com.golnaz.fridgelist.ui.SettingsScreen
+import com.golnaz.fridgelist.ui.ShoppingListScreen
 
 @Composable
-@Preview
 fun App() {
     MaterialTheme {
-        var showContent by remember { mutableStateOf(false) }
-        Column(
-            modifier = Modifier
-                .background(MaterialTheme.colorScheme.primaryContainer)
-                .safeContentPadding()
-                .fillMaxSize(),
-            horizontalAlignment = Alignment.CenterHorizontally,
-        ) {
-            Button(onClick = { showContent = !showContent }) {
-                Text("Click me!")
-            }
-            AnimatedVisibility(showContent) {
-                val greeting = remember { Greeting().greet() }
-                Column(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                ) {
-                    Image(painterResource(Res.drawable.compose_multiplatform), null)
-                    Text("Compose: $greeting")
+        var selectedTab by remember { mutableIntStateOf(0) }
+
+        Scaffold(
+            bottomBar = {
+                NavigationBar {
+                    NavigationBarItem(
+                        icon = { Icon(Icons.Filled.Home, contentDescription = null) },
+                        label = { Text("Kühlschrank") },
+                        selected = selectedTab == 0,
+                        onClick = { selectedTab = 0 }
+                    )
+                    NavigationBarItem(
+                        icon = { Icon(Icons.Filled.Star, contentDescription = null) },
+                        label = { Text("Rezepte") },
+                        selected = selectedTab == 1,
+                        onClick = { selectedTab = 1 }
+                    )
+                    NavigationBarItem(
+                        icon = { Icon(Icons.Filled.Done, contentDescription = null) },
+                        label = { Text("Einkaufsliste") },
+                        selected = selectedTab == 2,
+                        onClick = { selectedTab = 2 }
+                    )
+                    NavigationBarItem(
+                        icon = { Icon(Icons.Filled.Settings, contentDescription = null) },
+                        label = { Text("Einstellungen") },
+                        selected = selectedTab == 3,
+                        onClick = { selectedTab = 3 }
+                    )
                 }
+            }
+        ) { _ ->
+            when (selectedTab) {
+                0 -> FridgeScreen()
+                1 -> RecipesScreen()
+                2 -> ShoppingListScreen()
+                3 -> SettingsScreen()
             }
         }
     }
